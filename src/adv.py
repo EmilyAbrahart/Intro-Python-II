@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -49,3 +49,50 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+options = '\nYour available options are:\n\n| [n] North | [e] East | [s] South | [w] West | ----- | [q] Quit |\n'
+directions = {'n': 'north', 'e': 'east', 's': 'south', 'w': 'west'}
+player1 = Player('Bob', room['outside'])
+
+print('\n*.*.*. ADVENTURE GAME .*.*.*')
+print(player1)
+print(options)
+
+selection = ''
+while selection != 'q':
+
+    selection = input(
+        'Please choose which direction you would like to travel:')
+
+    try:
+        if selection == 'q':
+            print('Thank you for playing Adventure Game!')
+        elif selection == 'n':
+            if player1.room.n_to:
+                player1.room = player1.room.n_to
+                print(player1)
+            else:
+                print('Oh no! You can\'t go that way...')
+        elif selection == 'e':
+            if player1.room.e_to:
+                player1.room = player1.room.e_to
+                print(player1)
+            else:
+                print('Oh no! You can\'t go that way...')
+        elif selection == 's':
+            if player1.room.s_to:
+                player1.room = player1.room.s_to
+                print(player1)
+            else:
+                print('\nOh no! You can\'t go that way...\n')
+        elif selection == 'w':
+            if player1.room.w_to:
+                player1.room = player1.room.w_to
+                print(player1)
+            else:
+                print('Oh no! You can\'t go that way...')   
+        else:
+            print('You didn\'t enter a valid option. Please try again.')
+            print(options)
+    except ValueError:
+        print('Please choose one of the available options')
