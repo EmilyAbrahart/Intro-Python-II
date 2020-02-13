@@ -1,5 +1,15 @@
+from textwrap import wrap
 from room import Room
 from player import Player
+from item import Item
+
+item = {
+    'sword': Item("Sword", "A plain old rusty sword"),
+    'book': Item("Book", "It doesn't look like anyone has read this in a while..."),
+    'bag': Item("Bag", "A small satchel."),
+    'potion': Item("Potion", "A small bottle of glowing, green liquid."),
+    'treasure': Item('Treasure', "Oooh... It's shiny....")
+}
 # Declare all the rooms
 
 room = {
@@ -33,6 +43,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to rooms
+room['foyer'].items = [item['sword'], item['potion'], item['book']]
+room['overlook'].items = [item['book'], item['potion']]
+room['narrow'].items = [item['bag']]
+room['treasure'].items = [item['treasure']]
+
 #
 # Main
 #
@@ -50,47 +66,32 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-options = '\nYour available options are:\n\n| [n] North | [e] East | [s] South | [w] West | ----- | [q] Quit |\n'
+options = '\nYour available options are:\n\nTravel:\n |[n] North | [e] East | [s] South | [w] West |\n\nItems:\n| [i] Show Inventory | [r] Room Items |\n\n| [q] Quit |\n'
 directions = {'n': 'north', 'e': 'east', 's': 'south', 'w': 'west'}
+welcome = '\n*.*.*. ADVENTURE GAME .*.*.*'
+exitMessage = 'Thank you for playing Adventure Game!'
 player1 = Player('Bob', room['outside'])
 
-print('\n*.*.*. ADVENTURE GAME .*.*.*')
+print(welcome)
 print(player1)
 print(options)
+
 
 selection = ''
 while selection != 'q':
 
     selection = input(
-        'Please choose which direction you would like to travel:')
+        'What would you like to do? ')
 
     try:
         if selection == 'q':
-            print('Thank you for playing Adventure Game!')
-        elif selection == 'n':
-            if player1.room.n_to:
-                player1.room = player1.room.n_to
-                print(player1)
-            else:
-                print('Oh no! You can\'t go that way...')
-        elif selection == 'e':
-            if player1.room.e_to:
-                player1.room = player1.room.e_to
-                print(player1)
-            else:
-                print('Oh no! You can\'t go that way...')
-        elif selection == 's':
-            if player1.room.s_to:
-                player1.room = player1.room.s_to
-                print(player1)
-            else:
-                print('\nOh no! You can\'t go that way...\n')
-        elif selection == 'w':
-            if player1.room.w_to:
-                player1.room = player1.room.w_to
-                print(player1)
-            else:
-                print('Oh no! You can\'t go that way...')   
+            print(exitMessage)
+        elif selection in ['n', 'e', 's', 'w']:
+            player1.travel(selection)
+        elif selection == 'i':
+            print(player1.show_inventory())
+        elif selection == 'r':
+            print(player1.room.show_items())
         else:
             print('You didn\'t enter a valid option. Please try again.')
             print(options)
