@@ -1,22 +1,7 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
-from textwrap import wrap
 
-
-def prettyPrint(content):
-    width = 50
-
-    print('\n+-' + '-' * width + '-+')
-
-    for line in wrap(content.name, width):
-        print('| {0:^{1}} |'.format(line, width))
-
-    print('+-' + '-'*(width) + '-+')
-
-    for line in wrap(content.description, width):
-        print('| {0:^{1}} |'.format(line, width))
-
-    print('+-' + '-'*(width) + '-+\n')
+from utils import pretty_print
 
 
 class Room:
@@ -43,10 +28,11 @@ class Room:
 
     def show_items(self):
         if self.items:
+            pretty_print('- - Room Items - -')
             for i in self.items:
-                return prettyPrint(i)
+                pretty_print(i.name, i.description)
         else:
-            return "There are no items this room."
+            pretty_print("There are no items this room.")
 
     def __str__(self):
-            return f"{self.name}\n{self.description}"
+        return f"{self.name}\n{self.description}"
