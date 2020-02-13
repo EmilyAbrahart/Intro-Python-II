@@ -31,6 +31,7 @@ class Room:
             pretty_print('- - Room Items - -')
             for i in self.items:
                 pretty_print(i.name, i.description)
+            pretty_print('To pick up an item, use the command \'take item_name\' where item_name is the name of the item you wish to pick up')
         else:
             pretty_print("There are no items this room.")
 

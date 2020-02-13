@@ -39,6 +39,8 @@ class Player:
             pretty_print('- - Inventory - -')
             for i in self.inventory:
                 pretty_print(i.name, i.description)
+            pretty_print(
+                'To drop an item, use the command \'drop item_name\' where item_name is the name of the item you wish to drop')
         else:
             pretty_print("There are no items in your inventory.")
 
